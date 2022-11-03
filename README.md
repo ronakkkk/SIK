@@ -1,5 +1,5 @@
 # SIK
-A Student Information Kiosk (SIK) system is to be designed to allow students to access an electronic "one-stop" service shop. The SIK will aim to provide up-to-date information about all events taking place on campus.
+A Student Information Kiosk (SIK) system to allow students to access an electronic "one-stop" service shop. The SIK aim to provide up-to-date information about all events taking place on campus.
 
 ## Steps to Run
     1.	Install python, django and oracle database.
