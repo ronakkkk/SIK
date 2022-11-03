@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+    <div class="container">
+        <form method="post" action="admin_add_event">
+            {% csrf_token %}
+            <h2 style="color:green">Add New Event</h2>
+            <label><b>Event ID</b></label>
+            <br/>
+            <input type="number" id="event_id" placeholder="Event-ID" name="event_id" required><br/>
+            <label><b>Event Name</b></label>
+            <br/>
+            <input type="text" id="event_name" placeholder="Event Name" name="event_name" required><br/>
+            <label><b>Event Type</b></label>
+            <br/>
+            <input type="text" id="event_type" placeholder="Name" name="event_type" required><br/>
+            <label><b>Event Size</b></label>
+            <br/>
+            <input type="number" id="event_size" placeholder="Size of Event" name="event_size"><br/>
+            <label><b>Location</b></label>
+            <br/>
+            <input type="text" id="location" placeholder="Event Location" name="location" required><br/>
+            <label><b>Event Date</b></label>
+            <br/>
+            <input type="date" id="event_date" placeholder="Event Date" name="event_date" required><br/>
+            <br/>
+            <button onclick="validate()">Add Event</button>
+        </form>
+    </div>
+
+    <script>
+        function validate()
+        {
+            var event_id = $("#event_id");
+            var event_name = $("#event_name");
+            var event_type = $("#event_type");
+            var location = $("#location");
+            var event_date = $("#event_date");
+            if(event_id.val() == '' ){
+                alert('Please enter event id');
+                return false;
+            }
+            if(event_name.val() == '')
+            {
+                alert('Please enter event name');
+                return false;
+            }
+            if(event_type.val() == '')
+            {
+                alert('Please enter event type');
+                return false;
+            }
+            if(location.val() == '')
+            {
+                alert('Please enter Location');
+                return false;
+            }
+            if(event_date.val() == '' ){
+                alert('Please enter event date');
+                return false;
+            }
+            alert('THANK YOU, Event Adding Will Be Processed Shortly.Stay TUNE..');
+            return true;
+        }
+    </script>
+{% endblock %}

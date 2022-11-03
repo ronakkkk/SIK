@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+
+    <center><h2>Welcome {{student_info.user_name}}</h2></center>
+    <form action="student_registered_events" method="post">
+        {% csrf_token %}
+        <input type="number" id="registered_student_id" style="display:none" name="registered_student_id" value={{student_info.user_id}}>
+        <button style="none">
+            Registered Events
+        </button>
+    </form>
+    <div class="container" id="events">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for event names.." title="Type in a name">
+        <table class="table table-striped" id="myTable">
+            <thead>
+                <tr>
+                  <th scope="col">Event ID</th>
+                  <th scope="col">Event Name</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Event Date</th>
+                  <th scope="col">Book Event</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if event_information %}
+            {% for event in event_information %}
+                <tr>
+                    <td>{{event.event_id}}</td>
+                    <td>{{event.event_name}}</td>
+                    <td>{{event.event_type}}</td>
+                    <td>{{event.event_size}}</td>
+                    <td>{{event.location}}</td>
+                    <td>{{event.event_date}}</td>
+                    <td>
+                        <form action="book_it" method="post">
+                            {% csrf_token %}
+                            <input type="text" id="event_id" style="display:none" name="event_id" value={{event.event_id}}>
+                            <input type="text" id="event_name" style="display:none" name="event_name" value={{event.event_name}}>
+                            <input type="text" id="user_id" style="display:none" name="user_id" value={{student_info.user_id}}>
+                            <input type="text" id="user_name" style="display:none" name="user_name" value={{student_info.user_name}}>
+                            <button style="none">
+                                Book it
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
+{% endblock %}

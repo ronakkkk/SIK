@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+
+    <center><h2>Welcome Admin</h2></center>
+    <div class="container" id="events">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Student ID</th>
+                  <th scope="col">Student Name</th>
+                  <th scope="col">Password</th>
+                  <th scope="col">Approve Student</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if approval_information %}
+            {% for student in approval_information %}
+                <tr>
+                    <td>{{student.id}}</td>
+                    <td>{{student.name}}</td>
+                    <td>{{student.password}}</td>
+                    <td><form action="admin_approve_student" method="post">
+                        {% csrf_token %}
+                        <input type="number" id="student_id" style="display:none" name="student_id" value={{student.id}}>
+                        <input type="text" id="student_name" style="display:none" name="student_name" value={{student.name}}>
+                        <input type="text" id="student_pass" style="display:none" name="student_pass" value={{student.password}}>
+                        <button style="none" onclick="msg()">
+                            Approve {{student.student_name}} Student
+                        </button></form></td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function msg()
+        {
+            alert('THANK YOU, Student Approval Is Processed.');
+            return true;
+        }
+    </script>
+
+{% endblock %}

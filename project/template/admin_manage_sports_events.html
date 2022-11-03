@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+
+    <center><h2>Welcome Admin</h2></center>
+    <div class="container" id="events">
+        <form action="add_new_event" method="post" >{% csrf_token %}<button style="none">Add New Event</button></form>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Event ID</th>
+                  <th scope="col">Event Name</th>
+                  <th scope="col">Type</th>
+                  <th scope="col">Size</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Event Date</th>
+                  <th scope="col">Book Event</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if event_information %}
+            {% for event in event_information %}
+                <tr>
+                    <td>{{event.event_id}}</td>
+                    <td>{{event.event_name}}</td>
+                    <td>{{event.event_type}}</td>
+                    <td>{{event.event_size}}</td>
+                    <td>{{event.location}}</td>
+                    <td>{{event.event_date}}</td>
+                    <td><form action="remove_event" method="post">
+                        {% csrf_token %}
+                        <input type="text" id="event_id" style="display:none" name="event_id" value={{event.event_id}}>
+                        <button style="none" onclick="msg()">
+                            Remove {{event.event_name}} Event
+                        </button></form></td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function msg()
+        {
+            alert('THANK YOU, Event Removing Is Processed.');
+            return true;
+        }
+    </script>
+
+{% endblock %}

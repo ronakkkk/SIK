@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+    <div class="container">
+        <form method="post" action="event_booking">
+            {% csrf_token %}
+            <h2 style="color:green">Book Event</h2>
+            <label><b>Event ID</b></label>
+            <br/>
+            <input type="text" id="id" value={{event_id}} readonly name="id"><br/>
+
+            <label><b>Event Name</b></label>
+            <br/>
+            <input type="text" id="event_name" value={{event_name}} readonly name="event_name"><br/>
+
+            <label><b>User ID</b></label>
+            <br/>
+            <input type="number" id="user_id" name="user_id" value={{user_id}} readonly><br/>
+
+            <label><b>Full Name</b></label>
+            <br/>
+            <input type="text" id="user_name" name="user_name" value={{user_name}} readonly><br/>
+
+            <label><b>Age</b></label>
+            <br/>
+            <input type="number" id="user_age" placeholder="Age" name="user_age"><br/>
+
+            <label><b>Contact Number</b></label>
+            <br/>
+            <input type="tel" id="user_phone" placeholder="Contact Number" name="user_phone"><br/>
+
+            <label><b>Email ID</b></label>
+            <br/>
+            <input type="email" id="email_id" placeholder="Email-ID" name="email_id" required><br/>
+
+            <br/>
+            <button onclick="validate()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function validate()
+        {
+            var event_id = $("#id");
+            var event_name = $("#event_name");
+            var user_id = $("#user_id");
+            var name = $("#user_name");
+            var email_id = $("#email_id");
+            var arrival_date = $("#arrival");
+            if(event_id.val() == '' ){
+                alert('Please enter event id');
+                return false;
+            }
+            if(event_name.val() == '')
+            {
+                alert('Please enter event name');
+                return false;
+            }
+            if(user_id.val() == '' ){
+                alert('Please enter user_id');
+                return false;
+            }
+            if(name.val() == '')
+            {
+                alert('Please enter your name');
+                return false;
+            }
+            if(email_id.val() == '')
+            {
+                alert('Please enter your email id to contact');
+                return false;
+            }
+
+            alert('THANK YOU,Your Booking Will Be  Processed Shortly.Stay TUNE..');
+            return true;
+        }
+    </script>
+{% endblock %}

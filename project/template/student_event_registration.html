@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+
+    <center><h2>Welcome</h2></center>
+    <div class="container" id="registration">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Event ID</th>
+                  <th scope="col">Event Name</th>
+                  <th scope="col">Participant ID</th>
+                  <th scope="col">Participant Name</th>
+                  <th scope="col">Participant Age</th>
+                  <th scope="col">Phone Number</th>
+                  <th scope="col">Email Id</th>
+                  <th scope="col">Remove Registration</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if student_information %}
+            {% for student in student_information %}
+                <tr>
+                    <td>{{student.event_id}}</td>
+                    <td>{{student.event_name}}</td>
+                    <td>{{student.user_id}}</td>
+                    <td>{{student.participant_name}}</td>
+                    <td>{{student.age}}</td>
+                    <td>{{student.phone_number}}</td>
+                    <td>{{student.email_id}}</td>
+                    <td><form action="student_remove_registration" method="post">
+                        {% csrf_token %}
+                        <input type="text" id="user_id" style="display:none" name="user_id" value={{student.user_id}}>
+                        <input type="text" id="event_id" style="display:none" name="event_id" value={{student.event_id}}>
+                        <button style="none" onclick="msg()">
+                            Remove {{student.event_id}} Registration
+                        </button></form></td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function msg()
+        {
+            alert('THANK YOU, Event Removing Is Processed.');
+            return true;
+        }
+    </script>
+
+{% endblock %}

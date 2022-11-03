@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block content %}
+
+    <center><h2>Welcome Admin</h2></center>
+    <div class="container" id="events">
+        <form action="approve_student" method="post" >{% csrf_token %}<button style="none">Approve Student</button></form>
+        <label><h2>Approved Student</h2></label>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                  <th scope="col">Student ID</th>
+                  <th scope="col">Student Name</th>
+                  <th scope="col">Password</th>
+                  <th scope="col">Remove Student</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if student_information %}
+            {% for student in student_information %}
+                <tr>
+                    <td>{{student.student_id}}</td>
+                    <td>{{student.student_name}}</td>
+                    <td>{{student.student_password}}</td>
+                    <td><form action="remove_student" method="post">
+                        {% csrf_token %}
+                        <input type="text" id="student_id" style="display:none" name="student_id" value={{student.student_id}}>
+                        <button style="none" onclick="msg()">
+                            Remove {{student.student_name}} Details
+                        </button></form></td>
+                </tr>
+            {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function msg()
+        {
+            alert('THANK YOU, Event Removing Is Processed.');
+            return true;
+        }
+    </script>
+
+{% endblock %}

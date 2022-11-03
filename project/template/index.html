@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %} Home Page {% endblock title%}
+{% block content %}
+    <center>
+    <div>
+        <h1 class="display">Welcome, {{user.first_name.title|default:'Guest'}}</h1>
+        <hr class="my-4">
+    </div>
+    </center>
+    <h2 style="color:green">{{success}}</h2>
+    <div class="container" id="login_button">
+        <button onclick="ShowAndHide('student')">Student Login</button>
+        <button onclick="ShowAndHide('student-reg')">Student Sign up</button>
+        <button onclick="ShowAndHide('admin')">Admin Login</button>
+        <form method="post" action="guest_login">
+            {% csrf_token %}
+            <button>Guest</button>
+        </form>
+    </div>
+    <div class="container" id="student_login" style="display:none">
+    <form method="post" action="login">
+        {% csrf_token %}
+        <h2 style="color:green">Student Login</h2>
+        <h5 style="color:red"> {{ msg }} </h5>
+        <label><b>StudentID</b></label>
+        <br/>
+        <input type="text" id="id" placeholder="Enter User-ID" name="id"><br/>
+        <label><b>Password</b></label>
+        <br/>
+        <input type="password" id="pass" placeholder="Enter Password" name="pass"><br/><br/>
+        <button>Submit</button>
+        </form>
+    </div>
+<!--student signup-->
+    <div class="container" id="student_signup" style="display:none">
+    <form method="post" action="student_signup">
+        {% csrf_token %}
+        <h2 style="color:green">Student Sign-Up</h2>
+        <h5 style="color:red"> {{ msg }} </h5>
+        <label><b>Student-ID</b></label>
+        <br/>
+        <input type="text" id="student_id" placeholder="Enter User-ID" name="student_id"><br/>
+
+        <label><b>Student-Name</b></label>
+        <br/>
+        <input type="text" id="student_name" placeholder="Enter User-Name" name="student_name"><br/>
+
+        <label><b>Password</b></label>
+        <br/>
+        <input type="password" id="student_pass" placeholder="Enter Password" name="student_pass"><br/><br/>
+        <button>Submit</button>
+        </form>
+    </div>
+
+    <div class="container" id="admin_login" style="display:none">
+    <form method="post" action="admin_login">
+        {% csrf_token %}
+        <h2 style="color:green">Admin Login</h2>
+        <h5 style="color:red"> {{ msg }} </h5>
+        <label><b>Admin-ID</b></label>
+        <br/>
+        <input type="text" id="admin id" placeholder="Enter User-ID" name="id"><br/>
+        <label><b>Password</b></label>
+        <br/>
+        <input type="password" id="admin pass" placeholder="Enter Password" name="pass"><br/><br/>
+        <button>Submit</button>
+        </form>
+    </div>
+
+    <SCRIPT>
+    function ShowAndHide(entity) {
+        var login_but = document.getElementById('login_button');
+        login_but.style.display = 'none';
+        if(entity=='student'){
+            var x = document.getElementById('student_login');
+            if (x.style.display == 'none') {
+                var y = document.getElementById('student_signup');
+                if(y.style.display=='block'){
+                    y.style.display='none';
+                }
+
+                var z = document.getElementById('admin_login');
+                if(z.style.display=='block'){
+                    z.style.display='none';
+                }
+
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+        if(entity=='admin'){
+            var x = document.getElementById('admin_login');
+            if (x.style.display == 'none') {
+                var y = document.getElementById('student_signup');
+                if(y.style.display=='block'){
+                    y.style.display='none';
+                }
+
+                var z = document.getElementById('student_login');
+                if (z.style.display == 'block') {
+                    z.style.display = 'none';
+                }
+
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+        if(entity=='student-reg'){
+            var x = document.getElementById('student_signup');
+            if (x.style.display == 'none') {
+                <!--checking whether another block are none-->
+                var y = document.getElementById('admin_login');
+                if(y.style.display=='block'){
+                    y.style.display='none';
+                }
+
+                var z = document.getElementById('student_login');
+                if (z.style.display == 'block') {
+                    z.style.display = 'none';
+                }
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+    }
+    </SCRIPT>
+{% endblock content %}
